@@ -1,6 +1,5 @@
-import React from "react";
 import "./App.css";
-import FloralCatalog from "./components/FloralCatalog.tsx";
+import FloralCatalog from "./components/FloralCatalog";
 
 function App() {
   return (

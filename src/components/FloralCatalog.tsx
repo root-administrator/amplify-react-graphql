@@ -10,7 +10,7 @@ interface Item {
 const FloralCatalog: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(0); // Corrected use of useState
 
   // Simulate fetching data
   const fetchMoreData = () => {
@@ -48,7 +48,7 @@ const FloralCatalog: React.FC = () => {
     fetchMoreData(); // Fetch more items on scroll
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading]);
+  }, [loading, page]); // Added 'page' to dependency array
 
   return (
     <div className="catalog">
