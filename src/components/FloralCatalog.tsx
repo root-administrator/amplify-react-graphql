@@ -1,16 +1,15 @@
-// src/components/FloralCatalog.tsx
 import React, { useState, useEffect } from "react";
 import "./FloralCatalog.css"; // CSS for styling
 
 interface Item {
   id: number;
   name: string;
+  imageUrl: string; // Add an imageUrl property
 }
 
 const FloralCatalog: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(0); // Corrected use of useState
 
   // Simulate fetching data
   const fetchMoreData = () => {
@@ -22,6 +21,9 @@ const FloralCatalog: React.FC = () => {
         ...Array.from({ length: 20 }).map((_, index) => ({
           id: prevItems.length + index,
           name: `Arrangement ${prevItems.length + index + 1}`,
+          imageUrl: `https://s3.amazonaws.com/stg.obfuscationhub.com/image${
+            prevItems.length + index + 1
+          }.jpg`, // Assuming a naming convention
         })),
       ]);
       setLoading(false);
@@ -32,29 +34,12 @@ const FloralCatalog: React.FC = () => {
     fetchMoreData();
   }, []); // Only on mount
 
-  // Infinite scrolling logic
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop !==
-          document.documentElement.offsetHeight ||
-        loading
-      )
-        return;
-      setPage((prevPage) => prevPage + 1); // Increment page count to fetch more data
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    fetchMoreData(); // Fetch more items on scroll
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading, page]); // Added 'page' to dependency array
-
   return (
     <div className="catalog">
       {items.map((item) => (
         <div key={item.id} className="catalog-item">
-          {item.name}
+          <h3>{item.name}</h3>
+          <img src={item.imageUrl} alt={item.name} />
         </div>
       ))}
       {loading && <p>Loading...</p>}
