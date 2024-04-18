@@ -10,7 +10,7 @@ interface Item {
 const FloralCatalog: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(0);
+  const [setPage] = useState<number>(0);
 
   // Simulate fetching data
   const fetchMoreData = () => {
