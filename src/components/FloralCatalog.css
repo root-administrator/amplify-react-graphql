@@ -1,0 +1,20 @@
+/* src/components/FloralCatalog.css */
+
+.catalog {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    /* 3 columns layout */
+    grid-gap: 10px;
+    padding: 10px;
+}
+
+.catalog-item {
+    height: 288px;
+    /* Fixed height for each item */
+    background-color: lightgray;
+    /* Placeholder style */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+}
