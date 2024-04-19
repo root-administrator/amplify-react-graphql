@@ -1,29 +1,31 @@
 import React, { useState, useEffect } from "react";
-import "./FloralCatalog.css"; // CSS for styling
+import "./FloralCatalog.css";
 
 interface Item {
   id: number;
   name: string;
-  imageUrl: string; // Add an imageUrl property
+  imageUrl: string;
 }
 
 const FloralCatalog: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
+  // Base URL for CloudFront
+  const cloudFrontBaseUrl = "https://de0qkelr3j1kf.cloudfront.net";
+
   // Simulate fetching data
   const fetchMoreData = () => {
     setLoading(true);
-    // Placeholder for fetch request or Amplify API call
     setTimeout(() => {
       setItems((prevItems) => [
         ...prevItems,
         ...Array.from({ length: 20 }).map((_, index) => ({
           id: prevItems.length + index,
           name: `Arrangement ${prevItems.length + index + 1}`,
-          imageUrl: `https://s3.amazonaws.com/stg.obfuscationhub.com/image${
+          imageUrl: `${cloudFrontBaseUrl}/images/image${
             prevItems.length + index + 1
-          }.jpg`, // Assuming a naming convention
+          }.jpg?width=300&height=300`,
         })),
       ]);
       setLoading(false);
@@ -39,7 +41,11 @@ const FloralCatalog: React.FC = () => {
       {items.map((item) => (
         <div key={item.id} className="catalog-item">
           <h3>{item.name}</h3>
-          <img src={item.imageUrl} alt={item.name} />
+          <img
+            src={item.imageUrl}
+            alt={item.name}
+            style={{ width: "100%", height: "auto" }}
+          />
         </div>
       ))}
       {loading && <p>Loading...</p>}
